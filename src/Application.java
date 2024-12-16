@@ -10,14 +10,33 @@ public class Application {
     }
 
     abstract class Personne{
+        int ID
+        String Nom;
+        String Prenom;
+        String Email;
+
+
+        public Personne(int ID, String Nom, String Prenom, String Email){
+            this.ID = ID;
+            this.Nom = Nom;
+            this.Prenom = Prenom;
+            this.Email = Email;
+
+        }
         public abstract void reference();
 
     }
     class Apprenant extends Personne {
-        public void reference(){
-
+        public Apprenant(int ID, String Nom, String Prenom, String Email,int nots[]){
+            this.ID = ID;
+            this.Nom = Nom;
+            this.Prenom = Prenom;
+            this.Email = Email;
         }
-        int nots[];
+        public void reference(){
+                System.out.println("Apprenant");
+        }
+
 
     }
     class Formateur extends Personne{
