@@ -56,7 +56,7 @@ public class Application {
                 break;
         }
     }
-    public static void addApprenant(){
+    public static void addApprenant() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Entre ID");
         int ID = scanner.nextInt();
@@ -78,6 +78,22 @@ public class Application {
 
         scanner.nextInt();
     }
+    Apprenant apprenant = new Apprenant(ID, Nom, Prenom, Email, notes);
+
+    public Apprenant getApprenant() {
+        apprenant.add(apprenant);
+        System.out.println("Apprenant added successfully");
+    }
+
+    public static void viewApprenant(){
+        if(apprenants.isEmpty()) {
+            System.out.println("No Apprenant available.");
+        }else{
+            for (Apprenant apprenant : apprenants)
+                System.out.println("ID :" +apprenant.ID+ "Nom :" +apprenant.Nom+ "Prenom" +apprenant.Prenom+ "Email :" +apprenant.Email+ "notes :" apprenant.nots);
+        }
+    }
+
 
     public static void manageFormateurs() {
         System.out.println("Managing Formateurs...");
