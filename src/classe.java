@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class Classe {
+public class classe {
     private int id;
     private String name;
     private Formateur formateur; // class has one formateur
     private ArrayList<Apprenant> apprenants; // class has many apprenants
 
-    public Classe(int id, String name, Formateur formateur) {
+    public classe(int id, String name, Formateur formateur) {
         this.id = id;
         this.name = name;
         this.formateur = formateur;
@@ -20,7 +20,7 @@ public class Classe {
 
     // Remove an apprenant by ID
     public void removeApprenant(int apprenantId) {
-        apprenants.removeIf(apprenant -> apprenant.getID() == apprenantId);
+        apprenants.removeIf(apprenant -> apprenant.getId() == apprenantId);
     }
 
     // View all apprenants in the class

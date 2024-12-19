@@ -1,18 +1,37 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+public class Personne {
+    private int id;
+    private String nom;
+    private String prenom;
+    private String email;
 
-abstract static class Personne {
-    int ID;
-    String Nom;
-    String Prenom;
-    String Email;
 
-    public Personne(int ID, String Nom, String Prenom, String Email) {
-        this.ID = ID;
-        this.Nom = Nom;
-        this.Prenom = Prenom;
-        this.Email = Email;
+    public Personne(int id, String nom, String prenom, String email) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
     }
 
-    public abstract void reference();
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Personne [ID=" + id + ", Nom=" + nom + ", Prenom=" + prenom + ", Email=" + email + "]";
+    }
 }
