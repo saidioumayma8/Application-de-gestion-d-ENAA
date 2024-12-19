@@ -5,7 +5,7 @@ public class Formateur extends Personne {
 
 
     public Formateur(int id, String nom, String prenom, String email, String specialite, double salaire) {
-        super(id, nom, prenom, email); // Calling the superclass constructor
+        super(id, nom, prenom, email);
         this.specialite = specialite;
         this.salaire = salaire;
     }

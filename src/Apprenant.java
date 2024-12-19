@@ -3,7 +3,7 @@ public class Apprenant {
     private String nom;
     private String prenom;
     private String email;
-    private int[] notes;
+    private int[] notes; // or ArrayList<Double>, depending on your implementation
 
 
     public Apprenant(int id, String nom, String prenom, String email, int[] notes) {
@@ -23,33 +23,41 @@ public class Apprenant {
         return nom;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public String getPrenom() {
         return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int[] getNotes() {
         return notes;
     }
 
+    public void setNotes(int[] notes) {
+        this.notes = notes;
+    }
 
     @Override
     public String toString() {
-        StringBuilder notesString = new StringBuilder();
-        if (notes != null && notes.length > 0) {
-            for (int note : notes) {
-                notesString.append(note).append(" ");
-            }
-        }
-
-        if (notesString.length() > 500) {
-            notesString.setLength(500);
-            notesString.append("...");
-        }
-        return "Apprenant [ID=" + id + ", Nom=" + nom + ", Prenom=" + prenom + ", Email=" + email + ", Notes=" + notesString.toString().trim() + "]";
+        return "Apprenant{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
-
 }

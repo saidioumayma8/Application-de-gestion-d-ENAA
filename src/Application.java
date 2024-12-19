@@ -61,7 +61,7 @@ public class Application {
                     deleteApprenant(scanner);
                     return;
                 case 4:
-                    updateprenant();
+                    updateApprenant(scanner);
                     return;
                 case 5:
                     return;
@@ -143,12 +143,19 @@ public class Application {
         System.out.println("Apprenant deleted successfully!");
     }
 
-    private static void updateprenant(Scanner scanner){
+    private static void updateApprenant(Scanner scanner) {
+        if (apprenants.isEmpty()) {
+            System.out.println("No apprenants available to update.");
+            return;
+        }
+
         System.out.println("Enter the ID of the apprenant to update:");
         int id = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Consume the newline character
 
         Apprenant apprenantToUpdate = null;
+
+        // Find the apprenant by ID
         for (Apprenant apprenant : apprenants) {
             if (apprenant.getId() == id) {
                 apprenantToUpdate = apprenant;
@@ -156,30 +163,37 @@ public class Application {
             }
         }
 
-        if (formateurToUpdate == null) {
-            System.out.println("No formateur found with ID " + id);
+        if (apprenantToUpdate == null) {
+            System.out.println("No apprenant found with ID: " + id);
             return;
         }
 
-        System.out.println("Enter new specialite (leave blank to keep current):");
-        String newSpecialite = scanner.nextLine();
-        if (!newSpecialite.isEmpty()) {
-            formateurToUpdate.setSpecialite(newSpecialite);
+        System.out.println("Updating details for: " + apprenantToUpdate);
+
+        // Update the apprenant's name
+        System.out.println("Enter new name (leave blank to keep the current name):");
+        String newName = scanner.nextLine();
+        if (!newName.trim().isEmpty()) {
+            apprenantToUpdate.setNom(newName);
         }
 
-        System.out.println("Enter new salaire (leave blank to keep current):");
-        String salaireInput = scanner.nextLine();
-        if (!salaireInput.isEmpty()) {
-            try {
-                double newSalaire = Double.parseDouble(salaireInput);
-                formateurToUpdate.setSalaire(newSalaire);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid salary. Update aborted.");
-            }
+        // Update the apprenant's prenom
+        System.out.println("Enter new prenom (leave blank to keep the current prenom):");
+        String newPrenom = scanner.nextLine();
+        if (!newPrenom.trim().isEmpty()) {
+            apprenantToUpdate.setPrenom(newPrenom);
         }
 
-        System.out.println("Formateur updated successfully!");
+        // Update the apprenant's email
+        System.out.println("Enter new email (leave blank to keep the current email):");
+        String newEmail = scanner.nextLine();
+        if (!newEmail.trim().isEmpty()) {
+            apprenantToUpdate.setEmail(newEmail);
+        }
+
+        System.out.println("Apprenant updated successfully!");
     }
+
 
     private static void manageFormateurs(Scanner scanner) {
         while (true) {
@@ -217,7 +231,7 @@ public class Application {
     private static void addFormateur(Scanner scanner) {
         System.out.println("Enter Formateur ID:");
         int id = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Consume newline
 
         System.out.println("Enter Formateur Nom:");
         String nom = scanner.nextLine();
@@ -231,17 +245,25 @@ public class Application {
         System.out.println("Enter Formateur Specialite:");
         String specialite = scanner.nextLine();
 
-        System.out.println("Enter Formateur Salaire:");
-        double salaire = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
-
-        try {
-            Formateur formateur = new Formateur(id, nom, prenom, email, specialite, salaire);
-            formateurs.add(formateur);
-            System.out.println("Formateur added successfully!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        double salaire = 0.0;
+        while (true) {
+            System.out.println("Enter Formateur Salaire:");
+            try {
+                salaire = Double.parseDouble(scanner.nextLine()); // Read and parse the input
+                if (salaire < 0) {
+                    System.out.println("Salaire cannot be negative. Please enter a valid amount.");
+                    continue;
+                }
+                break; // Exit loop if valid
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid numeric value for salaire.");
+            }
         }
+
+        Formateur formateur = new Formateur(id, nom, prenom, email, specialite, salaire);
+        formateurs.add(formateur);
+
+        System.out.println("Formateur added successfully!");
     }
 
     private static void viewFormateur() {
@@ -343,41 +365,47 @@ public class Application {
     }
 
     private static void createClass(Scanner scanner) {
-        System.out.println("Enter Class ID:");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Enter Class ID:");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-        System.out.println("Enter Class Name:");
-        String name = scanner.nextLine();
+            System.out.println("Enter Class Name:");
+            String nom = scanner.nextLine();
 
-        if (formateurs.isEmpty()) {
-            System.out.println("No formateurs available. Add a formateur first.");
-            return;
-        }
+            if (formateurs.isEmpty()) {
+                System.out.println("No formateurs available. Add a formateur first.");
+                return;
+            }
 
-        System.out.println("Select Formateur by Index:");
-        for (int i = 0; i < formateurs.size(); i++) {
-            System.out.println(i + ". " + formateurs.get(i).getNom());
-        }
-        int formateurIndex = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Select Formateur by Index:");
+            for (int i = 0; i < formateurs.size(); i++) {
+                System.out.println(i + ". " + formateurs.get(i).getNom());
+            }
+            int formateurIndex = scanner.nextInt();
+            scanner.nextLine();
 
-        Formateur formateur = formateurs.get(formateurIndex);
-        classe classe = new classe(id, name, formateur);
-        classes.add(classe);
+            if (formateurIndex < 0 || formateurIndex >= formateurs.size()) {
+                System.out.println("Invalid index. Returning to menu.");
+                return;
+            }
 
-        System.out.println("Class created successfully!");
+            Formateur formateur = formateurs.get(formateurIndex);
+            classe classe = new classe(id, nom, formateur);
+            classes.add(classe);
+
+            System.out.println("Class created successfully!");
+
+
     }
 
     private static void viewClasses() {
         if (classes.isEmpty()) {
             System.out.println("No classes available.");
-        } else {
-            for (classe classe : classes) {
-                System.out.println("ID: " + classe.getId() +
-                        ", Name: " + classe.getName() +
-                        ", Formateur: " + classe.getFormateur().getNom());
-            }
+            return;
+        }
+
+        for (classe classe : classes) {
+            System.out.println(classe);
         }
     }
 
