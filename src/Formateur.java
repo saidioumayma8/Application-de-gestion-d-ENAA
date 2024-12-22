@@ -1,15 +1,14 @@
 public class Formateur extends Personne {
     private String specialite;
     private double salaire;
-    private classe classe;  // Only one class per Formateur, change if needed.
+    private classe classe;
 
     public Formateur(int id, String nom, String prenom, String email, String specialite, double salaire) {
-        super(id, nom, prenom, email);  // Ensure Personne class has this constructor
+        super(id, nom, prenom, email);
         this.specialite = specialite;
         this.salaire = salaire;
     }
 
-    // Getter and Setter methods for specialite, salaire, and classe
     public String getSpecialite() {
         return specialite;
     }

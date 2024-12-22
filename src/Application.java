@@ -347,4 +347,67 @@ public class Application {
             }
         }
     }
+
+    private static void deleteApprenant(Scanner scanner) {
+        System.out.println("Enter the ID of the Apprenant to delete:");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Apprenant apprenantToDelete = null;
+        for (Apprenant apprenant : apprenants) {
+            if (apprenant.getId() == id) {
+                apprenantToDelete = apprenant;
+                break;
+            }
+        }
+        if (apprenantToDelete == null) {
+            System.out.println("No apprenant found with ID " + id);
+            return;
+        }
+        apprenants.remove(apprenantToDelete);
+        System.out.println("Apprenant deleted successfully!");
+    }
+
+    private static void updateApprenant(Scanner scanner) {
+        System.out.println("Enter the ID of the Apprenant to update:");
+        int id = scanner.nextInt();
+        scanner.nextLine();  // Consume the newline character
+
+        Apprenant apprenantToUpdate = null;
+        for (Apprenant apprenant : apprenants) {
+            if (apprenant.getId() == id) {
+                apprenantToUpdate = apprenant;
+                break;
+            }
+        }
+
+        if (apprenantToUpdate == null) {
+            System.out.println("No apprenant found with ID " + id);
+            return;
+        }
+
+        // Update Nom
+        System.out.println("Enter new Nom (leave blank to keep current):");
+        String newNom = scanner.nextLine();
+        if (!newNom.isEmpty()) {
+            apprenantToUpdate.setNom(newNom);
+        }
+
+        // Update Prenom
+        System.out.println("Enter new Prenom (leave blank to keep current):");
+        String newPrenom = scanner.nextLine();
+        if (!newPrenom.isEmpty()) {
+            apprenantToUpdate.setPrenom(newPrenom);
+        }
+
+        // Update Email
+        System.out.println("Enter new Email (leave blank to keep current):");
+        String newEmail = scanner.nextLine();
+        if (!newEmail.isEmpty()) {
+            apprenantToUpdate.setEmail(newEmail);
+        }
+
+        System.out.println("Apprenant updated successfully!");
+    }
+
 }
