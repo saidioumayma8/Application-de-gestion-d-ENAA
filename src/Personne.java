@@ -1,4 +1,4 @@
-public class Personne {
+abstract class Personne {
     private int id;
     private String nom;
     private String prenom;
@@ -11,7 +11,9 @@ public class Personne {
         this.prenom = prenom;
         this.email = email;
     }
+public Personne(){
 
+}
 
     public int getId() {
         return id;

@@ -9,6 +9,10 @@ public class Formateur extends Personne {
         this.salaire = salaire;
     }
 
+public Formateur() {
+super();
+}
+
     public String getSpecialite() {
         return specialite;
     }
@@ -22,9 +26,7 @@ public class Formateur extends Personne {
     }
 
     public void setSalaire(double salaire) {
-        if (salaire < 0) {
-            throw new IllegalArgumentException("Le salaire ne peut pas être négatif.");
-        }
+
         this.salaire = salaire;
     }
 

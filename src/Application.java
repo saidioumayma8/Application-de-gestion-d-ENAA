@@ -6,7 +6,9 @@ public class Application {
     private static ArrayList<Formateur> formateurs = new ArrayList<>();
     private static ArrayList<classe> classes = new ArrayList<>();
 
+
     public static void main(String[] args) {
+     Application application=new Application();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -21,13 +23,13 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    manageApprenants(scanner);
+                    application.manageApprenants(scanner,application);
                     break;
                 case 2:
-                    manageFormateurs(scanner);
+                    application.manageFormateurs(scanner, application);
                     break;
                 case 3:
-                    manageClasses(scanner);
+                    application.manageClasses(scanner, application);
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -38,7 +40,8 @@ public class Application {
         }
     }
 
-    private static void manageFormateurs(Scanner scanner) {
+    private void manageFormateurs(Scanner scanner, Application application) {
+
         while (true) {
             System.out.println("\n--- Manage Formateurs ---");
             System.out.println("1. Add Formateur");
@@ -52,16 +55,16 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    addFormateur(scanner);
+                    application.addFormateur(scanner);
                     break;
                 case 2:
-                    viewFormateur();
+                    application.viewFormateur();
                     break;
                 case 3:
-                    deleteFormateur(scanner);
+                    application.deleteFormateur(scanner);
                     break;
                 case 4:
-                    updateFormateur(scanner);
+                    application.updateFormateur(scanner);
                     break;
                 case 5:
                     return;
@@ -71,10 +74,10 @@ public class Application {
         }
     }
 
-    private static void addFormateur(Scanner scanner) {
+    private  void addFormateur(Scanner scanner) {
         System.out.println("Enter Formateur ID:");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         System.out.println("Enter Formateur Nom:");
         String nom = scanner.nextLine();
@@ -109,7 +112,7 @@ public class Application {
         System.out.println("Formateur added successfully!");
     }
 
-    private static void viewFormateur() {
+    private  void viewFormateur() {
         if (formateurs.isEmpty()) {
             System.out.println("No formateurs available.");
         } else {
@@ -119,7 +122,7 @@ public class Application {
         }
     }
 
-    private static void deleteFormateur(Scanner scanner) {
+    private  void deleteFormateur(Scanner scanner) {
         System.out.println("Enter the ID of the formateur to delete:");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -139,7 +142,7 @@ public class Application {
         System.out.println("Formateur deleted successfully!");
     }
 
-    private static void updateFormateur(Scanner scanner) {
+    private  void updateFormateur(Scanner scanner) {
         System.out.println("Enter the ID of the formateur to update:");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -157,13 +160,13 @@ public class Application {
             return;
         }
 
-        System.out.println("Enter new specialite (leave blank to keep current):");
+        System.out.println("Enter new specialite :");
         String newSpecialite = scanner.nextLine();
         if (!newSpecialite.isEmpty()) {
             formateurToUpdate.setSpecialite(newSpecialite);
         }
 
-        System.out.println("Enter new salaire (leave blank to keep current):");
+        System.out.println("Enter new salaire:");
         String salaireInput = scanner.nextLine();
         if (!salaireInput.isEmpty()) {
             try {
@@ -177,7 +180,7 @@ public class Application {
         System.out.println("Formateur updated successfully!");
     }
 
-    private static void manageClasses(Scanner scanner) {
+    private  void manageClasses(Scanner scanner, Application application) {
         while (true) {
             System.out.println("\n--- Manage Classes ---");
             System.out.println("1. Create Class");
@@ -190,13 +193,13 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    createClass(scanner);
+                    application.createClass(scanner);
                     break;
                 case 2:
-                    viewClasses();
+                    application.viewClasses();
                     break;
                 case 3:
-                    assignApprenantToClass(scanner);
+
                     break;
                 case 4:
                     return;
@@ -206,7 +209,7 @@ public class Application {
         }
     }
 
-    private static void createClass(Scanner scanner) {
+    private  void createClass(Scanner scanner) {
         System.out.println("Enter Class ID:");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -238,7 +241,7 @@ public class Application {
         System.out.println("Class created successfully!");
     }
 
-    private static void viewClasses() {
+    private  void viewClasses() {
         if (classes.isEmpty()) {
             System.out.println("No classes available.");
             return;
@@ -249,68 +252,33 @@ public class Application {
         }
     }
 
-    private static void assignApprenantToClass(Scanner scanner) {
-        if (apprenants.isEmpty()) {
-            System.out.println("No apprenants available. Add apprenants first.");
-            return;
-        }
-        if (classes.isEmpty()) {
-            System.out.println("No classes available. Create a class first.");
-            return;
-        }
+    private void manageApprenants(Scanner scanner,Application application) {
 
-        System.out.println("Select an Apprenant to assign:");
-        for (int i = 0; i < apprenants.size(); i++) {
-            System.out.println(i + ". " + apprenants.get(i));
-        }
-        int apprenantIndex = scanner.nextInt();
-        scanner.nextLine();
-
-        if (apprenantIndex < 0 || apprenantIndex >= apprenants.size()) {
-            System.out.println("Invalid Apprenant selection.");
-            return;
-        }
-
-        Apprenant selectedApprenant = apprenants.get(apprenantIndex);
-
-        // Display and select Classe
-        System.out.println("Select a Class to assign the Apprenant to:");
-        for (int i = 0; i < classes.size(); i++) {
-            System.out.println(i + ". " + classes.get(i));
-        }
-        int classIndex = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        if (classIndex < 0 || classIndex >= classes.size()) {
-            System.out.println("Invalid Class selection.");
-            return;
-        }
-
-        classe selectedClass = classes.get(classIndex);
-
-        // Assign Apprenant to Classe
-        selectedClass.addApprenant(selectedApprenant);
-        System.out.println("Apprenant " + selectedApprenant.getNom() + " assigned to Class " + selectedClass.getNom() + " successfully!");
-    }
-
-    private static void manageApprenants(Scanner scanner) {
         while (true) {
             System.out.println("\n--- Manage Apprenants ---");
             System.out.println("1. Add Apprenant");
             System.out.println("2. View Apprenants");
-            System.out.println("3. Back to Main Menu");
+            System.out.println("3. Delete Apprenant");
+            System.out.println("4. Update Apprenants");
+            System.out.println("5. Back to Main Menu");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    addApprenant(scanner);
+                    application.addApprenant(scanner);
                     break;
                 case 2:
-                    viewApprenants();
+                    application.viewApprenants();
                     break;
                 case 3:
+                    application.deleteApprenant(scanner);
+                    return;
+                case 4:
+                    application.updateApprenant(scanner);
+                    return;
+                case 5:
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
@@ -318,7 +286,7 @@ public class Application {
         }
     }
 
-    private static void addApprenant(Scanner scanner) {
+    private void addApprenant(Scanner scanner) {
         System.out.println("Enter Apprenant ID:");
         int id = scanner.nextInt();
         scanner.nextLine(); // Consume newline
@@ -338,7 +306,7 @@ public class Application {
         System.out.println("Apprenant added successfully!");
     }
 
-    private static void viewApprenants() {
+    private  void viewApprenants() {
         if (apprenants.isEmpty()) {
             System.out.println("No apprenants available.");
         } else {
@@ -348,7 +316,7 @@ public class Application {
         }
     }
 
-    private static void deleteApprenant(Scanner scanner) {
+    private  void deleteApprenant(Scanner scanner) {
         System.out.println("Enter the ID of the Apprenant to delete:");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -368,10 +336,10 @@ public class Application {
         System.out.println("Apprenant deleted successfully!");
     }
 
-    private static void updateApprenant(Scanner scanner) {
+    private void updateApprenant(Scanner scanner) {
         System.out.println("Enter the ID of the Apprenant to update:");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Consume the newline character
+        scanner.nextLine();
 
         Apprenant apprenantToUpdate = null;
         for (Apprenant apprenant : apprenants) {
@@ -386,21 +354,19 @@ public class Application {
             return;
         }
 
-        // Update Nom
+
         System.out.println("Enter new Nom (leave blank to keep current):");
         String newNom = scanner.nextLine();
         if (!newNom.isEmpty()) {
             apprenantToUpdate.setNom(newNom);
         }
 
-        // Update Prenom
         System.out.println("Enter new Prenom (leave blank to keep current):");
         String newPrenom = scanner.nextLine();
         if (!newPrenom.isEmpty()) {
             apprenantToUpdate.setPrenom(newPrenom);
         }
 
-        // Update Email
         System.out.println("Enter new Email (leave blank to keep current):");
         String newEmail = scanner.nextLine();
         if (!newEmail.isEmpty()) {
